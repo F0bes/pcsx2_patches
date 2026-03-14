@@ -27,14 +27,14 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Download artifacts
         uses: actions/download-artifact@v4
-
       - name: Create a new release
-        uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: latest
-          prerelease: false
-          title: Latest Build
-          files: ./cheats/patches.zip
+        env:
+            GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --cleanup-tag --yes
+          gh release create latest --latest --title "Latest Build" --notes ""
+          gh release upload latest ./cheats/patches.zip
