@@ -15,7 +15,7 @@ jobs:
           7z a -r patches.zip ./patches/*
 
       - name: Upload archives
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cheats
           path: ./patches.zip
@@ -36,5 +36,5 @@ jobs:
             GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete latest --cleanup-tag --yes
-          gh release create latest --latest --title "Latest Build" --notes ""
+          gh release create latest --latest --title "Latest Build" --generate-notes
           gh release upload latest ./cheats/patches.zip
