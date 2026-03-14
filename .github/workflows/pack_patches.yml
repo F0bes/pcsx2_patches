@@ -35,6 +35,8 @@ jobs:
         env:
             GH_TOKEN: ${{ github.token }}
         run: |
+          echo "Current dir contents"
+          ls
           gh release delete latest --cleanup-tag --yes
           gh release create latest --latest --title "Latest Build" --generate-notes
           gh release upload latest ./cheats/patches.zip
